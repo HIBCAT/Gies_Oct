@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vega-Lite Bar Chart</title>
+    <meta charset="utf-8"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.3.2/build/vega.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.3/build/vega-lite.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@4.0.0-rc1/build/vega-embed.js"></script>
+
+    <style media="screen">
+        /* Add space between Vega-Embed links  */
+        .vega-actions a {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>
+    <center>Normalized Sentiment Score: Social Media Data</center>
+</h1>
+<!-- Container for the visualization -->
+<div id="vis1"></div>
+
+
+<script>
+    // Assign the specification to a local variable vlSpec.
+
+
+    var vlSpec1 = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "data": {"url": "https://raw.githubusercontent.com/HIBCAT/Gies_Oct/main/final_v6.csv"},
+            "vconcat": [
+                {
+                    "layer": [
+
+
+
+                        {
+                            "width": 1100,
+                            "height": 400,
+                            "mark": {"type": "line", "interpolate": "monotone",
+                            "tooltip": {"content": "data"}},
+                            "encoding": {
+                                "x": {
+                                    "field": "Date",
+                                    "type": "temporal",
+                                    "scale": {"domain": {"selection": "brush"}},
+                                    "axis": {"title": ""}
+                                },
+                                "y": {"field": "Value", "type": "quantitative", "title": "Net Sentiment"},
+                                "color": {"field": "Brand", "type": "nominal", "title": "Starbucks"}
+                            }
+
+                        },
+                        {
+                            "width": 1100,
+                            "height": 400,
+                            "mark": {"type": "bar", "opacity": 0.1, "color": "#85C5A6", "tooltip": {"content": "data"}},
+                            "encoding": {
+                                "x": {
+                                    "field": "Date",
+                                    "type": "temporal",
+                                    "scale": {"domain": {"selection": "brush"}},
+                                    "axis": {"title": ""}
+                                },
+                                "y": {
+                                    "field": "Normalized Volume", "type": "quantitative",
+                                    "title": "Normalized Volume(Green Bar & Line)"
+                                },
+                            }
+                        },
+
+
+
+                    ]
+                },
+
+                {
+                    "width": 1100,
+                    "height": 100,
+                    "mark": {"type": "line", "interpolate": "monotone", "color": "#85C5A6", "tooltip": {"content": "data"}},
+                    "encoding": {
+                        "x": {
+                            "field": "Date",
+                            "type": "temporal",
+                            "scale": {"domain": {"selection": "brush"}},
+                            "axis": {"title": ""}
+                        },
+                        "y": {"field": "Normalized Volume", "type": "quantitative", "title": "Normalized Volume"}
+                    }
+
+                },
+
+                {
+                    "width": 1100,
+                    "height": 100,
+                    "mark": {"type":"area", "tooltip": {"content": "data"}},
+                    "selection": {
+                        "brush": {"type": "interval", "encodings": ["x"]}
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Date",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "field": "Volume",
+                            "type": "quantitative",
+                            "axis": {"tickCount": 3, "grid": false}
+                        }
+                    }
+                }]
+        }
+    ;
+
+
+    // Embed the visualization in the container with id `vis`
+    vegaEmbed('#vis1', vlSpec1, {'actions': false});
+
+
+</script>
+
+
+</body>
+</html>
+
